@@ -1,0 +1,20 @@
+name: Docker Build and Push Image
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build -t registry.wildradar.me/apigatewaytrackandalert:latest .
+    - name: Login to registry
+      run: docker login registry.wildradar.me -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Push the Docker image
+      run: docker push registry.wildradar.me/apigatewaytrackandalert

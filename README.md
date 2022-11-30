@@ -1,1 +1,1 @@
-# S6-ApiGateway
+# API-Gateway
