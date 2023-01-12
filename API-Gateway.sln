@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API-Gateway-Track-and-Alert", "API-Gateway-Track-and-Alert\API-Gateway-Track-and-Alert.csproj", "{900D0ABD-6A7C-40C0-AD35-1B8261CC45EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API-Gateway", "API-Gateway-Track-and-Alert\API-Gateway.csproj", "{900D0ABD-6A7C-40C0-AD35-1B8261CC45EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,16 +10,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="OcleotAPIGateway\**" />
+    <Content Remove="Controllers\**" />
+    <Content Remove="OcleotAPIGateway\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="OcleotAPIGateway\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="OcleotAPIGateway\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Ocelot" Version="18.0.0" />
     <PackageReference Include="Ocelot.Provider.Kubernetes" Version="18.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="OcleotAPIGateway\" />
   </ItemGroup>
 
 </Project>

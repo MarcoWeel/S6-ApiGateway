@@ -1,6 +1,4 @@
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using API_Gateway.Helpers;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Kubernetes;
@@ -10,25 +8,6 @@ builder.Configuration.AddJsonFile("secrets/appsettings.secrets.json", true);
 
 
 var securityKey = builder.Configuration.GetSection("Keys")["SecurityKey"];
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o =>
-{
-    o.TokenValidationParameters = new TokenValidationParameters
-    {
-
-        IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(securityKey)),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-
-        ValidateIssuerSigningKey = true
-    };
-});
 
 // Add services to the container.
 
@@ -50,17 +29,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
 app.UseCors(x => x
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader());
 
-app.UseAuthentication();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
-app.UseOcelot().Wait();
+// Add Authorization
+var config = new OcelotPipelineConfiguration
+{
+    AuthorizationMiddleware
+        = async (downStreamContext, next) =>
+        await JwtMiddleware.CreateAuthorizationFilter(downStreamContext, securityKey, next)
+};
+
+app.UseOcelot(config).Wait();
 
 app.Run();
