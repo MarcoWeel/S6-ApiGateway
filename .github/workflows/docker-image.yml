@@ -30,6 +30,6 @@ jobs:
         KUBE_CERTIFICATE: ${{ secrets.KUBE_CERTIFICATE }}
         KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
       with:
-        args: rollout restart deployment auth-da-app
+        args: rollout restart deployment api-gateway
     - name: deploy
       run: echo "deploying started"
