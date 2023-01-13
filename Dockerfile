@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["API-Gateway-Track-and-Alert/API-Gateway-Track-and-Alert.csproj", "API-Gateway-Track-and-Alert/"]
-RUN dotnet restore "API-Gateway-Track-and-Alert/API-Gateway-Track-and-Alert.csproj"
+COPY ["API-Gateway-Track-and-Alert/API-Gateway.csproj", "API-Gateway/"]
+RUN dotnet restore "API-Gateway/API-Gateway.csproj"
 COPY . .
-WORKDIR "/src/API-Gateway-Track-and-Alert"
-RUN dotnet build "API-Gateway-Track-and-Alert.csproj" -c Release -o /app/build
+WORKDIR "/src/API-Gateway"
+RUN dotnet build "API-Gateway.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "API-Gateway-Track-and-Alert.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "API-Gateway.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "API-Gateway-Track-and-Alert.dll"]
+ENTRYPOINT ["dotnet", "API-Gateway.dll"]
